@@ -3,6 +3,7 @@
 namespace SilverStripe\SAML\Helpers;
 
 use Exception;
+use OneLogin\Saml2\Auth;
 use Psr\Log\LoggerInterface;
 use SilverStripe\Control\Director;
 use SilverStripe\Control\HTTPRequest;
@@ -10,10 +11,10 @@ use SilverStripe\Control\HTTPResponse_Exception;
 use SilverStripe\Control\RequestHandler;
 use SilverStripe\Core\Injector\Injectable;
 use SilverStripe\Core\Injector\Injector;
+use SilverStripe\Dev\Debug;
 use SilverStripe\SAML\Authenticators\SAMLLoginHandler;
 use SilverStripe\SAML\Control\SAMLController;
 use SilverStripe\SAML\Services\SAMLConfiguration;
-use OneLogin\Saml2\Auth;
 
 /**
  * Class SAMLHelper
@@ -66,6 +67,9 @@ class SAMLHelper
     {
         // $data is not used - the form is just one button, with no fields.
         $auth = $this->getSAMLAuth();
+
+        Debug::dump($auth);
+        exit;
 
         if ($request) {
             $request->getSession()->set('BackURL', $backURL);
