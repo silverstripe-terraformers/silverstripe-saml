@@ -150,6 +150,8 @@ class SAMLController extends Controller
 
         $attributes = $auth->getAttributes();
 
+        Debug::dump($attributes);
+
         $fieldToClaimMap = array_flip(Member::config()->claims_field_mappings);
 
         // Write a rudimentary member with basic fields on every login, so that we at least have something
