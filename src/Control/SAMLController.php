@@ -4,26 +4,27 @@ namespace SilverStripe\SAML\Control;
 
 use Exception;
 use function gmmktime;
+use function uniqid;
 use OneLogin\Saml2\Auth;
 use OneLogin\Saml2\Constants;
-use OneLogin\Saml2\Utils;
 use OneLogin\Saml2\Error;
+use OneLogin\Saml2\Utils;
 use Psr\Log\LoggerInterface;
+use SilverStripe\Control\Controller;
+use SilverStripe\Control\Director;
+use SilverStripe\Control\HTTPResponse;
 use SilverStripe\Core\Config\Config;
+use SilverStripe\Core\Injector\Injector;
+use SilverStripe\Dev\Debug;
 use SilverStripe\ORM\ValidationResult;
 use SilverStripe\SAML\Authenticators\SAMLAuthenticator;
 use SilverStripe\SAML\Authenticators\SAMLLoginForm;
 use SilverStripe\SAML\Helpers\SAMLHelper;
-use SilverStripe\Control\Controller;
-use SilverStripe\Control\Director;
-use SilverStripe\Control\HTTPResponse;
-use SilverStripe\Core\Injector\Injector;
 use SilverStripe\SAML\Model\SAMLResponse;
 use SilverStripe\SAML\Services\SAMLConfiguration;
 use SilverStripe\Security\IdentityStore;
 use SilverStripe\Security\Member;
 use SilverStripe\Security\Security;
-use function uniqid;
 
 /**
  * Class SAMLController
@@ -169,6 +170,8 @@ class SAMLController extends Controller
             $member->GUID = $guid;
         }
 
+        Debug::dump($member->config()->claims_field_mappings);
+
         foreach ($member->config()->claims_field_mappings as $claim => $field) {
             if (!isset($attributes[$claim][0])) {
                 $this->getLogger()->warning(
@@ -186,6 +189,8 @@ class SAMLController extends Controller
         }
 
         $member->SAMLSessionIndex = $auth->getSessionIndex();
+
+        Debug::dump($member);
 
         // This will trigger LDAP update through LDAPMemberExtension::memberLoggedIn, if the LDAP module is installed.
         // The LDAP update will also write the Member record a second time, but the member *must* be written before
