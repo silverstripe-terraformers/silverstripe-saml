@@ -148,6 +148,8 @@ class SAMLController extends Controller
             $guid = $auth->getNameId();
         }
 
+        Debug::dump($guid);
+
         $attributes = $auth->getAttributes();
 
         Debug::dump($attributes);
