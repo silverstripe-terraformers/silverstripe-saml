@@ -68,9 +68,6 @@ class SAMLHelper
         // $data is not used - the form is just one button, with no fields.
         $auth = $this->getSAMLAuth();
 
-        Debug::dump($auth);
-        exit;
-
         if ($request) {
             $request->getSession()->set('BackURL', $backURL);
             $request->getSession()->save($request);
