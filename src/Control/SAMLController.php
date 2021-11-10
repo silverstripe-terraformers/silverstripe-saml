@@ -148,11 +148,11 @@ class SAMLController extends Controller
             $guid = $auth->getNameId();
         }
 
-        Debug::dump($guid);
+        // Debug::dump($guid);
 
         $attributes = $auth->getAttributes();
 
-        Debug::dump($attributes);
+        // Debug::dump($attributes);
 
         $fieldToClaimMap = array_flip(Member::config()->claims_field_mappings);
 
@@ -174,7 +174,7 @@ class SAMLController extends Controller
             $member->GUID = $guid;
         }
 
-        Debug::dump($member->config()->claims_field_mappings);
+        // Debug::dump($member->config()->claims_field_mappings);
 
         foreach ($member->config()->claims_field_mappings as $claim => $field) {
             if (!isset($attributes[$claim][0])) {
@@ -194,7 +194,7 @@ class SAMLController extends Controller
 
         $member->SAMLSessionIndex = $auth->getSessionIndex();
 
-        Debug::dump($member);
+        // Debug::dump($member);
 
         // This will trigger LDAP update through LDAPMemberExtension::memberLoggedIn, if the LDAP module is installed.
         // The LDAP update will also write the Member record a second time, but the member *must* be written before
