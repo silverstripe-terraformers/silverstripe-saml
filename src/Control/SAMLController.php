@@ -202,8 +202,6 @@ class SAMLController extends Controller
         // Both SAML and LDAP identify Members by the same GUID field.
         $member->write();
 
-        exit('Member was written ok.');
-
         /** @var IdentityStore $identityStore */
         $identityStore = Injector::inst()->get(IdentityStore::class);
         $identityStore->logIn($member, false, $this->getRequest());
